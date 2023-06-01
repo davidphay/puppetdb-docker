@@ -10,7 +10,7 @@ export BUNDLE_PATH = $(PWD)/.bundle/gems
 export BUNDLE_BIN = $(PWD)/.bundle/bin
 export GEMFILE = $(PWD)/Gemfile
 export DOCKER_BUILDKIT ?= 1
-export PUPPETSERVER_IMAGE ?= puppet/puppetserver:edge
+export PUPPETSERVER_IMAGE ?= davidphay/puppetserver:latest
 
 VERSION ?= $(shell echo $(git_describe) | sed 's/-.*//')
 # to work around failures that occur between when the repo is tagged and when the package
@@ -54,9 +54,9 @@ build: prep
 		--build-arg build_date=$(build_date) \
 		--build-arg version=$(VERSION) \
 		--build-arg pupperware_analytics_stream=$(PUPPERWARE_ANALYTICS_STREAM) \
-		--file puppetdb/Dockerfile \
+		--no-cache \
 		--tag $(NAMESPACE)/puppetdb:$(VERSION) \
-		$(PWD)/..
+		./
 	@docker tag $(NAMESPACE)/puppetdb:$(VERSION) $(NAMESPACE)/puppetdb:latest
 
 test: prep

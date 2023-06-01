@@ -19,11 +19,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@master
-      - name: Set up Ruby 2.6
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-      - run: gem install bundler
+      # - name: Set up Ruby 2.6
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: '2.6'
+      # - run: gem install bundler
       - name: Build container
         run: |
           docker system prune --all --force --volumes

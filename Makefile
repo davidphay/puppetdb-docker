@@ -40,7 +40,7 @@ ifeq ($(hadolint_available),0)
 	@$(hadolint_command) Dockerfile
 else
 	@docker pull $(hadolint_container)
-	@docker run --rm -v ./Dockerfile:/Dockerfile -i $(hadolint_container) $(hadolint_command) Dockerfile
+	@docker run --rm -v $(PWD)/Dockerfile:/Dockerfile -i $(hadolint_container) $(hadolint_command) Dockerfile
 endif
 
 build: prep

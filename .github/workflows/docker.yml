@@ -24,6 +24,9 @@ jobs:
       #   with:
       #     ruby-version: '2.6'
       # - run: gem install bundler
+      - name: login registry
+        run: |
+          docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
       - name: Build container
         run: |
           docker system prune --all --force --volumes
@@ -31,7 +34,6 @@ jobs:
           make lint build
       - name: Publish container
         run: |
-          docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
           make publish
       - name: Build release container
         run: |

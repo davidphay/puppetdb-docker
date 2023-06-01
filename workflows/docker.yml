@@ -1,0 +1,53 @@
+name: Docker test and publish
+
+on:
+  push:
+    branches:
+      - main
+  create:
+    tags:
+      - '*'
+
+jobs:
+  build-and-publish:
+    env:
+      PUPPERWARE_ANALYTICS_STREAM: production
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - run: gem install bundler
+      - name: Build container
+        working-directory: docker
+        run: |
+          docker system prune --all --force --volumes
+          docker builder prune --force --keep-storage=10GB
+          make lint build
+      - name: Publish container
+        working-directory: docker
+        run: |
+          docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+          make publish
+      - name: Build release container
+        working-directory: docker
+        run: |
+          if make prep; then
+            make lint build
+          else
+            echo "Skipping release container building and testing"
+          fi
+      - name: Publish release container
+        working-directory: docker
+        run: |
+          if make prep; then
+            make publish
+          else
+            echo "Skipping release container publishing"
+          fi

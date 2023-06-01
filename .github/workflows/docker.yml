@@ -25,18 +25,15 @@ jobs:
           ruby-version: '2.6'
       - run: gem install bundler
       - name: Build container
-        working-directory: docker
         run: |
           docker system prune --all --force --volumes
           docker builder prune --force --keep-storage=10GB
           make lint build
       - name: Publish container
-        working-directory: docker
         run: |
           docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
           make publish
       - name: Build release container
-        working-directory: docker
         run: |
           if make prep; then
             make lint build
@@ -44,7 +41,6 @@ jobs:
             echo "Skipping release container building and testing"
           fi
       - name: Publish release container
-        working-directory: docker
         run: |
           if make prep; then
             make publish

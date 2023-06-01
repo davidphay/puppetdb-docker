@@ -130,3 +130,5 @@ LABEL org.label-schema.name="PuppetDB (release)" \
       org.label-schema.vcs-ref="$vcs_ref" \
       org.label-schema.version="$version" \
       org.label-schema.build-date="$build_date"
+
+COPY Dockerfile /

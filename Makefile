@@ -37,10 +37,10 @@ endif
 
 lint:
 ifeq ($(hadolint_available),0)
-	@$(hadolint_command) puppetdb/Dockerfile
+	@$(hadolint_command) Dockerfile
 else
 	@docker pull $(hadolint_container)
-	@docker run --rm -v $(PWD)/puppetdb/Dockerfile:/Dockerfile \
+	@docker run --rm -v $(PWD)/Dockerfile:/Dockerfile \
 		-i $(hadolint_container) $(hadolint_command) Dockerfile
 endif
 

@@ -1,4 +1,4 @@
-# [puppetlabs/puppetdb](https://github.com/puppetlabs/puppetdb)
+# [davidphay/puppetdb](https://github.com/davidphay/puppetdb-docker)
 
 The Dockerfile for this image is available in the PuppetDB repository
 [here][1].
@@ -70,8 +70,8 @@ to your `docker run` command.
  This is disabled by default.
 
 
-[1]: https://github.com/puppetlabs/puppetdb/blob/master/docker/puppetdb/Dockerfile
-[2]: https://github.com/puppetlabs/puppetdb/tree/master/docker
+[1]: https://github.com/davidphay/puppetdb-docker/blob/main/Dockerfile
+[2]: https://github.com/davidphay/puppetdb-docker
 [3]: https://puppet.com/docs/puppetdb/latest/index.html
 [4]: https://github.com/puppetlabs/pupperware
 

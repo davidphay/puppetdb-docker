@@ -40,8 +40,7 @@ ifeq ($(hadolint_available),0)
 	@$(hadolint_command) Dockerfile
 else
 	@docker pull $(hadolint_container)
-	@docker run --rm -v $(PWD)/Dockerfile:/Dockerfile \
-		-i $(hadolint_container) $(hadolint_command) Dockerfile
+	@docker run --rm -v ./Dockerfile:/Dockerfile -i $(hadolint_container) $(hadolint_command) Dockerfile
 endif
 
 build: prep
@@ -62,8 +61,7 @@ build: prep
 test: prep
 	bundle install --path $$BUNDLE_PATH --gemfile $$GEMFILE --with test
 	bundle update
-	PUPPET_TEST_DOCKER_IMAGE=$(NAMESPACE)/puppetdb:$(VERSION) \
-		bundle exec --gemfile $$GEMFILE rspec spec
+	PUPPET_TEST_DOCKER_IMAGE=$(NAMESPACE)/puppetdb:$(VERSION) bundle exec --gemfile $$GEMFILE rspec spec
 
 push-image: prep
 	@docker images
